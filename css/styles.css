@@ -1,0 +1,135 @@
+body {
+    background-color: #000000; 
+    color: #ffffff; 
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.login-container {
+    background-color: #1c1c1c;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+    text-align: center;
+    width: 300px;
+}
+
+h1 {
+    color: #39FF14;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+input[type="text"], 
+input[type="password"], 
+input[type="tel"], 
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background-color: #000000;
+    border: 1px solid #39FF14;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus, 
+input[type="password"]:focus, 
+input[type="tel"]:focus {
+    border-color: #00FFFF;
+    outline: none;
+    box-shadow: 0 0 10px #00FFFF;
+}
+
+.login-btn {
+    background-color: #39FF14;
+    border: none;
+    color: #000000;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #00FFFF;
+}
+
+.link {
+    color: #00FFFF;
+    text-decoration: none;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.container-izquierda {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px; 
+}
+
+.container-izquierda a {
+    background-color: #39FF14;
+    color: #000000;
+    text-align: center;
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.container-izquierda a:hover {
+    background-color: #00FFFF;
+    color: #000000;
+}
+
+.container-derecha img {
+    width: 100%;
+    height: auto;
+    max-width: auto; 
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container-derecha,
+    .container-izquierda {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .container-derecha img {
+        max-width: 300px; 
+    }
+
+    .container-izquierda a {
+        width: 80%;
+        margin: 0 auto;
+    }
+}
