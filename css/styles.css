@@ -87,6 +87,8 @@ input[type="tel"]:focus {
     flex-direction: column;
     justify-content: center;
     gap: 20px; 
+    width: 100%;
+    padding: 10%; 
 }
 
 .container-izquierda a {
@@ -105,12 +107,16 @@ input[type="tel"]:focus {
     color: #000000;
 }
 
-.container-derecha img {
+.container-derecha {
     width: 100%;
     height: auto;
     max-width: auto; 
 }
-
+img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain; /* Esto asegurará que la imagen mantenga sus proporciones */
+}
 
 @media (max-width: 768px) {
     .container {

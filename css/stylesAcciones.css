@@ -1,0 +1,68 @@
+
+.icono {
+    width: 24px;
+    height: 24px;
+  }
+
+  .icono-bajo {
+    transform: translateY(5px); 
+  }
+
+  .btn-icon {
+    border: none;
+    background: none;
+    padding: 0;
+  }
+
+  .list-group-item div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+  }
+
+  .navbar {
+    background-color: black; 
+    
+}
+.navbar-brand img {
+    width: 7%; 
+    height: auto; 
+    border-radius: 50%; 
+    object-fit: cover; 
+}
+.nav-link {
+    color: white; 
+}
+.nav-link:hover {
+    color: #ddd; 
+}
+.navbar {
+  background-color: black;
+  padding: 0.5rem 1rem; 
+}
+.navbar-brand img {
+  width: 80px; 
+  max-height: 80px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+}
+.dropdown img{
+  width: 80px; 
+  max-height: 80px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+}
+.nav-link {
+  color: white !important;
+  font-size: 1.2rem; 
+}
+.nav-link:hover {
+  color: #ddd !important; 
+}
+.img-account {
+  margin-left: 15px; 
+}
+
+.navbar-text {
+  margin-left: 15px; 
+}

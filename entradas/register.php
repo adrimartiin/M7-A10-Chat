@@ -9,14 +9,20 @@
 <body>
     <div class="login-container">
         <h1>Resgístrate</h1>
-        <form action="login.php" method="POST">
+        <form action="../validaciones/validaRegister.php" method="POST">
             <input type="text" name="nombre_usuario" placeholder="Nombre de usuario">
             <input type="text" name="nombreReal" placeholder="Nombre">
             <input type="tel" name="numTelefono" placeholder="Número de teléfono">
             <input type="password" name="password" placeholder="Contraseña">
             <input type="password" name="repetirPassword" placeholder="Repite la contraseña">
             <button type="submit" class="login-btn">Entrar</button>
+            <?php
+                if(isset($_GET['error']) == '1'){
+                    echo "<p style='color: red'>El nombre de usuario ya existe</p>";
+                }
+            ?>
         </form>
     </div>
 </body>
 </html>
+
