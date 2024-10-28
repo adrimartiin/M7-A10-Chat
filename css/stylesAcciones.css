@@ -66,3 +66,46 @@
 .navbar-text {
   margin-left: 15px; 
 }
+
+/* Barra de búsqueda y botón */
+.search-bar {
+  display: flex;
+  gap: 8px;
+  margin: 10px 20px;
+}
+
+.input-search {
+  flex-grow: 1;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.input-search:focus {
+  border-color: #00A884;
+  box-shadow: 0 0 4px rgba(0, 168, 132, 0.4);
+  outline: none;
+}
+
+.add-button {
+  padding: 8px 16px;
+  background-color: #00A884;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.add-button:hover {
+  background-color: #00785C;
+}
+
+.add-button:active {
+  transform: scale(0.95);
+}
+/* fin barra buscadora */
