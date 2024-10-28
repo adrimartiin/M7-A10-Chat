@@ -44,5 +44,5 @@ CREATE TABLE tbl_amigos (
     id_usuario_Dos INT NOT NULL,  -- el que acepta la solicitud
     fecha_amistad DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario_Uno) REFERENCES tbl_usuarios(id_usuario),
-    FOREIGN KEY (id_usuario_Dos) REFERENCES tbl_usuarios(id_usuario)
+    FOREIGN KEY (id_usuario_Dos) REFERENCES tbl_usuarios(id_usuario)    
 );
