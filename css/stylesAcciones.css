@@ -2,7 +2,7 @@ body {
   font-family: 'Arial', sans-serif;
   background-color: #f8f9fa; 
   margin: 0; 
-  padding: 70px 0 20px; 
+  padding: 70px 0 0; 
 }
 
 .navbar {
@@ -125,40 +125,43 @@ body {
   background-color: #218838; 
 }
 
-
-
 /* estilos bienvenida (muestra los chats) */
 .container-chats {
-width: 100%;
-height: 100vh;
-display: flex;
+    width: 100%;
+    height: calc(100vh - 70px); 
+    display: flex;
+    padding-top: 15px; 
+    background-color: #160912; 
 }
 
 .barra-izquierda {
-width: 30%;
-background-color: #160912;
-border-right: 1px solid white;
+    width: 30%;
+    background-color: #160912;
+    border-right: 1px solid white;
 }
 
 .barra-derecha {
-width: 70%;
-background-color:  #160912;
+    width: 70%;
+    background-color:  #160912;
 }
+
 .logo-bienvenida {
-text-align: center;
+    text-align: center;
 }
-.chat-logo{
-width: 200px;
+
+.chat-logo {
+    width: 200px;
 }
+
 .mensaje-bienvenida {
-color: white;
+    color: white;
 }
 
-.prueba{
-color: white;
-}
-hr{
-color: white;
-width: 100%;
+.prueba {
+    color: white;
 }
 
+hr {
+    color: white;
+    width: 100%;
+}
