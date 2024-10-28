@@ -11,9 +11,9 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
 include_once "../conexion/conexion.php";
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-black">
+<nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="bienvenida.php" style="margin-left: auto;">
+        <a class="navbar-brand" href="bienvenida.php">
             <img src="../img/img_navbar.png" alt="Logo">
         </a>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -21,12 +21,8 @@ include_once "../conexion/conexion.php";
                 <li class="nav-item active">
                     <a class="nav-link" href="buscarUsuarios.php">Buscar Usuarios <span class="sr-only"></span></a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Solicitudes de Amistad</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Pendiente</a></li>
-                        <li><a class="dropdown-item" href="#">Amigos</a></li>
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="solicitudesAmistad.php">Solicitudes de Amistad</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="mostrarAmigos.php">Amigos</a>
@@ -54,34 +50,27 @@ include_once "../conexion/conexion.php";
 
   <!-- Barra para buscar usuarios -->
    <form action="" method="POST">
-    <div class="search-bar">
-      <input type="text" name="search" placeholder="Buscar usuario..." class="input-search">
-      <button class="add-button">Buscar</button>
-    </div>
+        <div class="search-bar">
+            <input type="text" name="search" placeholder="Buscar usuario..." class="input-search" value="<?php if(isset($_POST['search'])){ echo htmlspecialchars($_POST['search']);}?>">
+            <button class="add-button">Buscar</button>
+        </div>
    </form>
 
 
-<?php
-try {
+   <?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty(trim($_POST['search']))) { // Comprobar que se haya enviado un término de búsqueda
+    $textoBusqueda = trim($_POST['search']);
+    
+    // Preparar y ejecutar consulta para buscar usuarios
+    $sql = "SELECT id_usuario, nombre_usuario FROM tbl_usuarios WHERE nombre_usuario LIKE ? AND nombre_usuario != ?";
+    $stmt = mysqli_prepare($conexion, $sql);
+    $param = $textoBusqueda . '%';
+    
+    mysqli_stmt_bind_param($stmt, 'ss', $param, $nombre_usuario);
+    mysqli_stmt_execute($stmt);
+    $resultados = mysqli_stmt_get_result($stmt);
 
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') { //compruebo si recibo algo por post (boton de la barra de busqueda)
-        $textoBusqueda = trim($_POST['search']);  // con el trim quito los espacios de principio y final del texto  // y si el texto se envio lo captura en $textoBusqueda
-
-        $sql = "SELECT id_usuario, nombre_usuario FROM tbl_usuarios WHERE nombre_usuario LIKE ?";  //hago la consulta
-        $stmt = mysqli_prepare($conexion, $sql);
-        $param = $textoBusqueda . '%';  // % filtro para buscar aquellas palarbas que comienzen por la letra que seintroduzca
-        
-        mysqli_stmt_bind_param($stmt, 's', $param);
-        mysqli_stmt_execute($stmt);
-        $resultados = mysqli_stmt_get_result($stmt);
-    } else {
-      $sql = "SELECT id_usuario, nombre_usuario FROM tbl_usuarios";  //y en caso de que no se haga click en el boton del formulario para filtrar nada, se mostrara la lista de usuarios
-        $stmt = mysqli_prepare($conexion, $sql);
-        mysqli_stmt_execute($stmt);
-        $resultados = mysqli_stmt_get_result($stmt);
-    }
-
-
+    // Mostrar la lista de resultados
     echo "<ul class='list-group'>";
     foreach ($resultados as $fila) {
         echo "<li class='list-group-item d-flex justify-content-between align-items-center'>" . htmlspecialchars($fila['nombre_usuario']) . 
@@ -98,10 +87,9 @@ try {
     echo "</ul>";
 
     mysqli_stmt_close($stmt);
-    mysqli_close($conexion);
-} catch (Exception $e) {
-    echo "Error de conexión: " . $e->getMessage();
 }
+
+mysqli_close($conexion);
 ?>
 
 

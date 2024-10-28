@@ -2,13 +2,24 @@
 session_start(); 
 $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'] : '';
 ?>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<link rel="stylesheet" href="../css/stylesAcciones.css">
-
-<?php
-include_once "../conexion/conexion.php";
-?>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/stylesAcciones.css">
+    <title>Solicitudes de Amistad</title>
+    <style>
+        .img-account {
+            margin-left: -20px; 
+        }
+        .navbar-text {
+            margin-left: 15px; 
+        }
+    </style>
+</head>
+<body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="bienvenida.php">
@@ -19,12 +30,8 @@ include_once "../conexion/conexion.php";
                 <li class="nav-item active">
                     <a class="nav-link" href="buscarUsuarios.php">Buscar Usuarios <span class="sr-only"></span></a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Solicitudes de Amistad</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Pendiente</a></li>
-                        <li><a class="dropdown-item" href="#">Amigos</a></li>
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="solicitudesAmistad.php">Solicitudes de Amistad</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="mostrarAmigos.php">Amigos</a>
@@ -49,3 +56,6 @@ include_once "../conexion/conexion.php";
         </span>
     </div>
 </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
