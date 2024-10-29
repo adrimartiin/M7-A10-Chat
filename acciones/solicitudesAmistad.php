@@ -1,7 +1,10 @@
 <?php
 session_start(); 
+include_once "../conexion/conexion.php"; // Asegúrate de incluir la conexión
+
 $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'] : '';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,14 +13,7 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/stylesAcciones.css">
     <title>Solicitudes de Amistad</title>
-    <style>
-        .img-account {
-            margin-left: -20px; 
-        }
-        .navbar-text {
-            margin-left: 15px; 
-        }
-    </style>
+ 
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
@@ -38,7 +34,6 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
                 </li>
             </ul>
         </div>
-        <!-- Imagen a la derecha -->
         <div class="dropdown">
             <button class="btn dropdown-toggle img-account" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="../img/img_navbar.png" style="width: 40px; max-height: 40px; border-radius: 50%; object-fit: cover;">
@@ -48,7 +43,6 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
                 <li><a class="dropdown-item" href="mostrarAmigos.php">Amigos</a></li>
             </ul>
         </div>
-        <!-- Nombre de usuario a la derecha -->
         <span class="navbar-text text-light">
             <?php if ($nombre_usuario): ?>
                 <?php echo htmlspecialchars($nombre_usuario); ?>
@@ -56,6 +50,64 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
         </span>
     </div>
 </nav>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<div class="container friend-request-list">
+
+    <?php
+    try {
+        // Obtener el ID del usuario actual
+        $sql = "SELECT id_usuario FROM tbl_usuarios WHERE nombre_usuario = ?";
+        $stmt = mysqli_stmt_init($conexion);
+        if (mysqli_stmt_prepare($stmt, $sql)) {
+            mysqli_stmt_bind_param($stmt, "s", $nombre_usuario);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $usuario = mysqli_fetch_assoc($result);
+            $id_usuario = $usuario['id_usuario'];
+        }
+
+        // Consultar las solicitudes pendientes para el usuario actual
+        $sqlSolicitudes = "SELECT tbl_solicitudes.id_solicitud, tbl_usuarios.nombre_usuario, tbl_solicitudes.fecha_solicitud
+                           FROM tbl_solicitudes
+                           JOIN tbl_usuarios ON tbl_solicitudes.id_usuario_solicitante = tbl_usuarios.id_usuario
+                           WHERE tbl_solicitudes.id_usuario_receptor = ? AND tbl_solicitudes.estado_solicitud = 'pendiente'";
+        $stmtSolicitudes = mysqli_stmt_init($conexion);
+        if (mysqli_stmt_prepare($stmtSolicitudes, $sqlSolicitudes)) {
+            mysqli_stmt_bind_param($stmtSolicitudes, "i", $id_usuario);
+            mysqli_stmt_execute($stmtSolicitudes);
+            $solicitudes = mysqli_stmt_get_result($stmtSolicitudes);
+
+            // Mostrar las solicitudes en una lista
+            echo "<ul class='list-group mt-4'>";
+            if (mysqli_num_rows($solicitudes) > 0) {
+                while ($solicitud = mysqli_fetch_assoc($solicitudes)) {
+                    echo "<li class='list-group-item d-flex justify-content-between align-items-center'>
+                            <span>" . htmlspecialchars($solicitud['nombre_usuario']) . "  //  " . htmlspecialchars($solicitud['fecha_solicitud']) . "</span>
+                            <div>
+                                <form action='aceptarSolicitud.php' method='POST' style='display:inline;'>
+                                    <input type='hidden' name='id_solicitud' value='" . $solicitud['id_solicitud'] . "'>
+                                    <button type='submit' class='btn btn-success btn-sm'>Aceptar</button>
+                                </form>
+                                <form action='rechazarSolicitud.php' method='POST' style='display:inline; margin-left:5px;'>
+                                    <input type='hidden' name='id_solicitud' value='" . $solicitud['id_solicitud'] . "'>
+                                    <button type='submit' class='btn btn-danger btn-sm'>Rechazar</button>
+                                </form>
+                            </div>
+                          </li>";
+                }
+            } else {
+                echo "<li class='list-group-item'>No tienes solicitudes de amistad pendientes.</li>";
+            }
+            echo "</ul>";
+        }
+    } catch (Exception $e) {
+        echo "<br><h6>" . htmlspecialchars($e->getMessage()) . "</h6>";
+        exit;
+    }
+    ?>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

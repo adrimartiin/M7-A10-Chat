@@ -43,6 +43,7 @@ try {
         mysqli_stmt_bind_param($stmt, "ii", $id_usuario, $id_usuario_receptor);
         mysqli_stmt_execute($stmt);
         echo "<h6>Solicitud de amistad enviada con éxito.</h6>";
+        header("Location: ./solicitudesAmistad.php");
     } else {
         echo "<h6>Error al preparar la declaración.</h6>";
     }

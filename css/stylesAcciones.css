@@ -165,3 +165,15 @@ hr {
     color: white;
     width: 100%;
 }
+.img-account {
+  margin-left: -20px; 
+}
+.navbar-text {
+  margin-left: 15px; 
+}
+.friend-request-list {
+  margin-top: 60px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
