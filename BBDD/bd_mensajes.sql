@@ -11,7 +11,6 @@ CREATE TABLE tbl_usuarios(
 );
 
 
--- inserts provisionales
 INSERT INTO tbl_usuarios (nombre_usuario, nombreReal_usuario, telf_usuario, psswd_usuario)
 VALUES 
 ('juan23', 'Juan Perez', '123456789', 'password123'),
@@ -26,23 +25,22 @@ VALUES
 ('jorge.m', 'Jorge Molina', '852963741', 'JorgeMolina!pass');
 
 
--- Tabla para guardar las solicitudes de amistad
 CREATE TABLE tbl_solicitudes (
     id_solicitud INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    id_usuario_solicitante INT NOT NULL, -- El que envía la solicitud
-    id_usuario_receptor INT NOT NULL,    -- El que recibe la solicitud
+    id_usuario_solicitante INT NOT NULL, 
+    id_usuario_receptor INT NOT NULL,    
     estado_solicitud ENUM('pendiente', 'aceptada', 'rechazada') DEFAULT 'pendiente',
     fecha_solicitud DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario_solicitante) REFERENCES tbl_usuarios(id_usuario),
     FOREIGN KEY (id_usuario_receptor) REFERENCES tbl_usuarios(id_usuario)
 );
 
--- Tabla para guardar a los amigos (solicitudes ya aceptadas)
 CREATE TABLE tbl_amigos (
     id_amistad INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    id_usuario_Uno INT NOT NULL, -- el que envia la solicitud
-    id_usuario_Dos INT NOT NULL,  -- el que acepta la solicitud
+    id_usuario_Uno INT NOT NULL, 
+    id_usuario_Dos INT NOT NULL,  
     fecha_amistad DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario_Uno) REFERENCES tbl_usuarios(id_usuario),
     FOREIGN KEY (id_usuario_Dos) REFERENCES tbl_usuarios(id_usuario)    
 );
+

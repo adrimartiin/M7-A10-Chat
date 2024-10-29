@@ -1,4 +1,5 @@
 <?php
+session_start();
 // si no esta el mismo usuario en la base de datos o la contraseña no es la misma q cuando se ha hecho el register: ERROR
 // si existe el usuario en la base de datos y la contraseña es la misma q cuando se ha hecho el register: header location bienvenida
 
@@ -8,6 +9,7 @@ include_once '../conexion/conexion.php';
 // Recibir los datos del formulario
 $usuario = mysqli_real_escape_string($conexion, $_POST['username']);
 $password = mysqli_real_escape_string($conexion, $_POST['password']);
+$_SESSION['usuario'] = $usuario;
 
 // Consultar si el usuario existe en la base de datos
 try{
@@ -28,7 +30,9 @@ try{
         header('Location: ../entradas/login.php?error=1');
     }
     
-
+    $sql = "SELECT id_usuario, nombre_usuario FROM tbl_usuarios";
+    $resultados = mysqli_query($conexion, $sql);
+    var_dump($sql);
     
 }  catch(Exception $e){
     echo "Error: ". $e->getMessage();

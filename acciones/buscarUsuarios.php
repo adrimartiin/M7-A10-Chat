@@ -89,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty(trim($_POST['search']))) { /
     mysqli_stmt_close($stmt);
 }
 
+
 mysqli_close($conexion);
 ?>
 
