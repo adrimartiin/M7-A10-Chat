@@ -1,9 +1,5 @@
 <?php
 session_start();
-// si no esta el mismo usuario en la base de datos o la contraseña no es la misma q cuando se ha hecho el register: ERROR
-// si existe el usuario en la base de datos y la contraseña es la misma q cuando se ha hecho el register: header location bienvenida
-
-// Conexión a la base de datos
 include_once '../conexion/conexion.php';
 
 // Recibir los datos del formulario
@@ -11,36 +7,26 @@ $usuario = mysqli_real_escape_string($conexion, $_POST['username']);
 $password = mysqli_real_escape_string($conexion, $_POST['password']);
 $_SESSION['usuario'] = $usuario;
 
-// Consultar si el usuario existe en la base de datos
-try{
-    $sql = "SELECT nombre_usuario, psswd_usuario FROM tbl_usuarios WHERE nombre_usuario = (?) AND psswd_usuario = (?)";
+try {
+    $sql = "SELECT nombre_usuario, psswd_usuario FROM tbl_usuarios WHERE nombre_usuario = ?";
     $stmt = mysqli_prepare($conexion, $sql);
-    mysqli_stmt_bind_param($stmt, "ss", $usuario, $password);
+    mysqli_stmt_bind_param($stmt, "s", $usuario);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     $row = mysqli_fetch_assoc($result);
     mysqli_stmt_close($stmt);
-    
-    // Si el usuario existe y la contraseña es correcta
-    if($row){
-        session_start();
+
+    // Si el usuario existe, valido la contraseña
+    if ($row && password_verify($password, $row['psswd_usuario'])) {
         $_SESSION['nombre_usuario'] = $row['nombre_usuario'];
         header('Location: ../acciones/bienvenida.php');
+        exit();
     } else {
         header('Location: ../entradas/login.php?error=1');
+        exit();
     }
-    
-    $sql = "SELECT id_usuario, nombre_usuario FROM tbl_usuarios";
-    $resultados = mysqli_query($conexion, $sql);
-    var_dump($sql);
-    
-}  catch(Exception $e){
-    echo "Error: ". $e->getMessage();
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
 }
-
-
-
-
-
-
-    
+?>
