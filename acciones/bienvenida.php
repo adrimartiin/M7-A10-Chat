@@ -17,7 +17,6 @@ try {
         $result = mysqli_stmt_get_result($stmt);
         $usuario = mysqli_fetch_assoc($result);
         $id_usuario = $usuario['id_usuario'];
-        echo $id_usuario;
     }
 } catch (Exception $e) {
     echo "<br><h6>" . htmlspecialchars($e->getMessage()) . "</h6>";
@@ -49,7 +48,7 @@ try {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="buscarUsuarios.php">Buscar Usuarios <span class="sr-only"></span></a>
+                    <a class="nav-link" href="buscarUsuarios.php">Añadir Amigos <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="solicitudesAmistad.php">Solicitudes de Amistad</a>
@@ -79,17 +78,39 @@ try {
 </nav>
     <div class="container-chats">
         <div class="barra-izquierda">
-            <p class="prueba"> Usuario 1 </p>
-            <hr>
-            <p class="prueba"> Usuario 2 </p>
-            <hr>
-            <p class="prueba"> Usuario 3 </p>
-            <hr>
-            <p class="prueba"> Usuario 4 </p>
-            <hr>
-            <p class="prueba"> Usuario 5 </p>
-            <hr>
-            <p class="prueba"> Usuario 6 </p>
+            <?php
+
+            $sql = "SELECT tbl_usuarios.nombre_usuario
+            FROM tbl_amigos 
+            JOIN tbl_usuarios ON (tbl_usuarios.id_usuario = tbl_amigos.id_usuario_Uno OR tbl_usuarios.id_usuario = tbl_amigos.id_usuario_Dos)
+            WHERE (tbl_amigos.id_usuario_Uno = ? OR tbl_amigos.id_usuario_Dos = ?)
+            AND tbl_usuarios.id_usuario != ?";
+
+            $stmt = mysqli_stmt_init($conexion);
+
+            if (mysqli_stmt_prepare($stmt, $sql)) {
+            mysqli_stmt_bind_param($stmt, "iii", $id_usuario, $id_usuario, $id_usuario);
+            mysqli_stmt_execute($stmt);
+            $resultados = mysqli_stmt_get_result($stmt);
+            }
+
+            echo "<ul class='list-group'>";
+            foreach ($resultados as $fila) {
+                echo "<li class='list-group-item d-flex justify-content-between align-items-center'>" . htmlspecialchars($fila['nombre_usuario']) . 
+                "<div class='d-flex align-items-center'>
+                    <form action='chatear.php' method='POST' style='display:inline; margin-right: 10px;'>
+                        <button type='submit' class='btn-icon'>
+                            <img src='../img/img_mensaje.png' class='icono icono-bajo'>
+                        </button>
+                    </form>
+                </div>
+                </li>";
+            }
+            echo "</ul>";
+            mysqli_stmt_close($stmt);
+            mysqli_close($conexion);
+
+            ?>
         </div>
 
         <div class="barra-derecha">
@@ -102,3 +123,6 @@ try {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+ 

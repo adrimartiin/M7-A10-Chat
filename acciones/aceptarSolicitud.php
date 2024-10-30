@@ -37,6 +37,7 @@ if(isset($_POST['id_solicitud'])){
     mysqli_stmt_close($stmt2);
 
     // header ('Location a mostrarAmigos?') o seguir en pagina de solicitudes por si hay mas
+    header ('Location: solicitudesAmistad.php');
 
     } catch (Exception $e) {
         // Deshacer la transacción en caso de error
