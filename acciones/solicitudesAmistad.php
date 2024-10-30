@@ -1,6 +1,6 @@
 <?php
 session_start(); 
-include_once "../conexion/conexion.php"; // Asegúrate de incluir la conexión
+include_once "../conexion/conexion.php"; 
 
 $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'] : '';
 ?>
