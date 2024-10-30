@@ -44,3 +44,14 @@ CREATE TABLE tbl_amigos (
     FOREIGN KEY (id_usuario_Dos) REFERENCES tbl_usuarios(id_usuario)    
 );
 
+CREATE TABLE tbl_mensajes(
+    id_mensaje INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id_usuario_emisor INT NOT NULL,
+    id_usuario_receptor INT NOT NULL,
+    mensaje VARCHAR(250) NOT NULL,
+    fecha_mensaje DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario_emisor) REFERENCES tbl_usuarios(id_usuario),
+    FOREIGN KEY (id_usuario_receptor) REFERENCES tbl_usuarios(id_usuario)
+
+);
+
