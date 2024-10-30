@@ -188,100 +188,69 @@ hr {
 .friend-item span {
   flex-grow: 1;
 }
-.chat-button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #007bff;
-  font-size: 1.2em;
-}
-.chat-button:hover {
-  color: #0056b3;
-}
+
 
 /* estilos chat */
-.barra-derecha {
-  width: 70%;
-  background-color: #e5ddd5; /* Color de fondo similar al de WhatsApp */
-  background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png'); /* Imagen de fondo similar a la de WhatsApp */
-  background-repeat: repeat; /* Repetir patrón */
-  background-size: cover; /* Cubre toda el área */
-  padding: 20px; /* Espacio interno */
-  border-left: 1px solid rgba(0, 0, 0, 0.1); /* Línea divisoria */
+/* Estilo general para el contenedor de chats */
+.container-chats {
   display: flex;
-  flex-direction: column; /* Permite que los elementos se apilen verticalmente */
   height: calc(100vh - 70px); /* Altura total menos el tamaño de la navbar */
-  overflow-y: auto; /* Permite scroll para contenido largo */
 }
 
-.messages {
-  flex-grow: 1; /* Ocupa el espacio disponible entre la barra de entrada y la parte superior */
-  overflow-y: auto; /* Permite scroll en la sección de mensajes */
-  margin-bottom: 10px; /* Espacio entre los mensajes y la barra de entrada */
+/* Estilo de la barra izquierda */
+.barra-izquierda {
+  width: 30%; /* Ajusta el ancho de la barra de amigos */
+  background-color: #160912; /* Color de fondo */
+  padding: 15px; /* Espaciado interno */
+  overflow-y: auto; /* Permitir scroll si hay muchos amigos */
 }
 
-.chat-input {
-  display: flex; /* Permite alinear el input y el botón */
-  margin-top: auto; /* Mantiene la barra de entrada al fondo del div */
-  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con algo de transparencia */
-  border-radius: 20px; /* Bordes redondeados */
-  padding: 10px; /* Espacio interno */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+/* Estilo de la barra derecha */
+.barra-derecha {
+  width: 70%; /* Ajusta el ancho de la barra de chat */
+  background-color: #e5ddd5; /* Color de fondo de chat similar a WhatsApp */
+  padding: 20px; /* Espacio interno */
+  display: flex;
+  flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+  height: calc(100vh - 70px); /* Altura total menos el tamaño de la navbar */
+  overflow-y: auto; /* Permitir scroll si el contenido es largo */
 }
 
-.input-message {
-  flex-grow: 1; /* Toma el espacio disponible */
-  border: none; /* Sin borde */
-  padding: 10px; /* Espacio interno */
-  border-radius: 20px; /* Bordes redondeados */
-  margin-right: 10px; /* Espacio entre el input y el botón */
-  font-size: 16px; /* Tamaño de fuente */
-}
-
-.input-message:focus {
-  outline: none; /* Sin contorno al enfocar */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul al enfocar */
-}
-
-.send-button {
-  background-color: #28a745; /* Color verde */
-  color: white; /* Color del texto */
-  border: none; /* Sin borde */
-  border-radius: 20px; /* Bordes redondeados */
-  padding: 10px 15px; /* Espacio interno */
-  cursor: pointer; /* Cambia el cursor a mano al pasar el mouse */
-  font-size: 16px; /* Tamaño de fuente */
-  transition: background-color 0.3s ease; /* Transición suave al pasar el mouse */
-}
-
-.send-button:hover {
-  background-color: #218838; /* Color verde más oscuro al pasar el mouse */
-}
-.messages {
-  flex-grow: 1; /* Ocupa el espacio disponible entre la barra de entrada y la parte superior */
-  overflow-y: auto; /* Permite scroll en la sección de mensajes */
-  margin-bottom: 10px; /* Espacio entre los mensajes y la barra de entrada */
-}
-
+/* Estilo para los mensajes enviados y recibidos */
 .message {
-  padding: 10px; /* Espacio interno */
-  border-radius: 10px; /* Bordes redondeados */
+  padding: 10px 15px; /* Espaciado interno */
+  border-radius: 15px; /* Bordes redondeados */
   margin-bottom: 10px; /* Espacio entre mensajes */
   max-width: 70%; /* Ancho máximo del mensaje */
-  clear: both; /* Asegura que los elementos floten correctamente */
 }
 
-.message-user1 {
-  background-color: #dcf8c6; /* Fondo verde claro para el usuario 1 */
-  align-self: flex-end; /* Alinea el mensaje a la derecha */
-  margin-left: auto; /* Empuja el mensaje a la derecha */
+/* Mensaje enviado */
+.sent {
+  background-color: #28a745; /* Color de fondo verde */
+  color: white; /* Color del texto */
+  align-self: flex-end; /* Alinear al final */
 }
 
-.message-user2 {
-  background-color: #ffffff; /* Fondo blanco para el usuario 2 */
-  align-self: flex-start; /* Alinea el mensaje a la izquierda */
-  margin-right: auto; /* Empuja el mensaje a la izquierda */
+/* Mensaje recibido */
+.received {
+  background-color: white; /* Color de fondo blanco */
+  color: black; /* Color del texto */
+  align-self: flex-start; /* Alinear al principio */
 }
 
+/* Estilo del input de mensaje */
+.input-message {
+  width: 100%; /* Ancho completo */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 20px; /* Bordes redondeados */
+  border: 1px solid #ccc; /* Borde gris */
+  margin-right: 10px; /* Margen derecho para espacio entre input y botón */
+}
 
-
+/* Botón de enviar */
+.btn-primary {
+  background-color: #28a745; /* Color del botón */
+  border: none; /* Sin borde */
+  border-radius: 20px; /* Bordes redondeados */
+  margin-top: 10px; /* Margen superior */
+}

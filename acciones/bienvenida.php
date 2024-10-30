@@ -21,7 +21,8 @@ try {
 } catch (Exception $e) {
     echo "<br><h6>" . htmlspecialchars($e->getMessage()) . "</h6>";
     exit;
-}?>
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -76,53 +77,50 @@ try {
         </span>
     </div>
 </nav>
-    <div class="container-chats">
-        <div class="barra-izquierda">
-            <?php
+<div class="container-chats">
+    <div class="barra-izquierda">
+        <?php
+        // Obtener la lista de amigos
+        $sql = "SELECT tbl_usuarios.id_usuario, tbl_usuarios.nombre_usuario
+                FROM tbl_amigos 
+                JOIN tbl_usuarios ON (tbl_usuarios.id_usuario = tbl_amigos.id_usuario_Uno OR tbl_usuarios.id_usuario = tbl_amigos.id_usuario_Dos)
+                WHERE (tbl_amigos.id_usuario_Uno = ? OR tbl_amigos.id_usuario_Dos = ?)
+                AND tbl_usuarios.id_usuario != ?";
 
-            $sql = "SELECT tbl_usuarios.nombre_usuario
-            FROM tbl_amigos 
-            JOIN tbl_usuarios ON (tbl_usuarios.id_usuario = tbl_amigos.id_usuario_Uno OR tbl_usuarios.id_usuario = tbl_amigos.id_usuario_Dos)
-            WHERE (tbl_amigos.id_usuario_Uno = ? OR tbl_amigos.id_usuario_Dos = ?)
-            AND tbl_usuarios.id_usuario != ?";
-
-            $stmt = mysqli_stmt_init($conexion);
-
-            if (mysqli_stmt_prepare($stmt, $sql)) {
+        $stmt = mysqli_stmt_init($conexion);
+        if (mysqli_stmt_prepare($stmt, $sql)) {
             mysqli_stmt_bind_param($stmt, "iii", $id_usuario, $id_usuario, $id_usuario);
             mysqli_stmt_execute($stmt);
             $resultados = mysqli_stmt_get_result($stmt);
-            }
+        }
 
-            echo "<ul class='list-group'>";
-            foreach ($resultados as $fila) {
-                echo "<li class='list-group-item d-flex justify-content-between align-items-center'>" . htmlspecialchars($fila['nombre_usuario']) . 
-                "<div class='d-flex align-items-center'>
-                    <form action='chatear.php' method='POST' style='display:inline; margin-right: 10px;'>
-                        <button type='submit' class='btn-icon'>
-                            <img src='../img/img_mensaje.png' class='icono icono-bajo'>
-                        </button>
-                    </form>
-                </div>
-                </li>";
-            }
-            echo "</ul>";
-            mysqli_stmt_close($stmt);
-            mysqli_close($conexion);
+        echo "<ul class='list-group'>";
+        foreach ($resultados as $fila) {
+            // Agregar el ID del usuario amigo en el campo oculto
+            echo "<li class='list-group-item d-flex justify-content-between align-items-center'>" . htmlspecialchars($fila['nombre_usuario']) . 
+            "<div class='d-flex align-items-center'>
+                <form action='chatear.php' method='POST' style='display:inline; margin-right: 10px;'>
+                    <input type='hidden' name='amigo_id' value='" . htmlspecialchars($fila['id_usuario']) . "'>
+                    <button type='submit' class='btn-icon'>
+                        <img src='../img/img_mensaje.png' class='icono icono-bajo'>
+                    </button>
+                </form>
+            </div>
+            </li>";
+        }
+        echo "</ul>";
+        mysqli_stmt_close($stmt);
+        mysqli_close($conexion);
+        ?>
+    </div>
 
-            ?>
+    <div class="barra-derecha">
+        <div class="logo-bienvenida">
+            <img class="chat-logo" src="../img/img_navbar.png">
+            <p class="mensaje-bienvenida">¡Bienvenido a la red de mensajes del momento!</p>
         </div>
-
-        <div class="barra-derecha">
-                <div class="logo-bienvenida">
-                    <img class="chat-logo" src="../img/img_navbar.png">
-                    <p class="mensaje-bienvenida"> ¡Bienvenido a la red de mensajes del momento¡ </p>
-                </div>
-
-        </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
-
-
- 
