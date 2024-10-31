@@ -34,7 +34,30 @@ try {
     exit;
 }
 
-// Insertar la solicitud de amistad en tbl_solicitudes
+// Verificar si ya existe una solicitud de amistad pendiente o aceptada entre los usuarios
+try {
+    $sqlCheck = "SELECT * FROM tbl_solicitudes 
+                 WHERE id_usuario_solicitante = ? AND id_usuario_receptor = ? 
+                 AND estado_solicitud IN ('pendiente', 'aceptada')";
+    $stmtCheck = mysqli_stmt_init($conexion);
+    if (mysqli_stmt_prepare($stmtCheck, $sqlCheck)) {
+        mysqli_stmt_bind_param($stmtCheck, "ii", $id_usuario, $id_usuario_receptor);
+        mysqli_stmt_execute($stmtCheck);
+        $resultCheck = mysqli_stmt_get_result($stmtCheck);
+
+        if (mysqli_num_rows($resultCheck) > 0) {
+            // Mostrar mensaje de error en rojo si la solicitud ya existe
+            echo "<div style='color: red;'><h3>Error: Ya has enviado una solicitud de amistad a este usuario.</h3></div>";
+            echo "<a href='buscarUsuarios.php' style='color: blue;'>Volver a buscar usuarios</a>";
+            exit();
+        }
+    }
+} catch (Exception $e) {
+    echo "<br><h6>" . htmlspecialchars($e->getMessage()) . "</h6>";
+    exit;
+}
+
+// Insertar la solicitud de amistad si no existe
 try {
     $sql = "INSERT INTO tbl_solicitudes (id_usuario_solicitante, id_usuario_receptor, estado_solicitud)
             VALUES (?, ?, 'pendiente')";
@@ -42,8 +65,10 @@ try {
     if (mysqli_stmt_prepare($stmt, $sql)) {
         mysqli_stmt_bind_param($stmt, "ii", $id_usuario, $id_usuario_receptor);
         mysqli_stmt_execute($stmt);
-        echo "<h6>Solicitud de amistad enviada con éxito.</h6>";
+        
+        // Redirigir al usuario sin mostrar mensaje de éxito
         header("Location: ./solicitudesAmistad.php");
+        exit();
     } else {
         echo "<h6>Error al preparar la declaración.</h6>";
     }
@@ -52,3 +77,5 @@ try {
     exit;
 }
 ?>
+
+
