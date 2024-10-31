@@ -10,13 +10,12 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/stylesAcciones.css">
     <title>Solicitudes de Amistad</title>
- 
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="bienvenida.php">
-            <img src="../img/img_navbar.png" alt="Logo">
+            <img src="../img/img_navbar.png" alt="Logo" class="logo-navbar">
         </a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
@@ -40,13 +39,15 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
                 <li><a class="dropdown-item" href="mostrarAmigos.php">Amigos</a></li>
             </ul>
         </div>
-        <span class="navbar-text text-light">
+        <span class="navbar-text text-light user-name">
             <?php if ($nombre_usuario): ?>
                 <?php echo htmlspecialchars($nombre_usuario); ?>
             <?php endif; ?>
         </span>
     </div>
 </nav>
+
+<div class="container friend-request-list mt-5 pt-5">
 <?php
 include_once "../conexion/conexion.php";
 
@@ -91,11 +92,11 @@ try {
         
         // Mostrar la lista de amigos
         if (mysqli_num_rows($result) > 0) {
-            echo "<h4>Lista de amigos aceptados:</h4><ul>";
+            echo "<h4 class='mb-3'>Lista de amigos aceptados:</h4><ul class='list-group'>";
             while ($amigo = mysqli_fetch_assoc($result)) {
-                echo "<li>Usuario: " . htmlspecialchars($amigo['nombre_usuario']) .
-                     " - Nombre real: " . htmlspecialchars($amigo['nombreReal_usuario']) .
-                     " - Teléfono: " . htmlspecialchars($amigo['telf_usuario']) . "</li>";
+                echo "<li class='list-group-item d-flex justify-content-between align-items-center'>
+                    <span>Usuario: " . htmlspecialchars($amigo['nombre_usuario']) . "</span>
+                </li>";
             }
             echo "</ul>";
         } else {
@@ -109,3 +110,9 @@ try {
     exit;
 }
 ?>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Ho7jG9z9B5QsPLg8mgSMTWVwHG79/Z1azTVY9H/m/e58K1iTVYHRt6hx4JK1K1Yf" crossorigin="anonymous"></script>
+</body>
+</html>
+
