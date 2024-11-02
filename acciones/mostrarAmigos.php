@@ -20,7 +20,7 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="buscarUsuarios.php">Añadir Amigos <span class="sr-only"></span></a>
+                    <a class="nav-link" href="buscarUsuarios.php">Añadir Amigos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="solicitudesAmistad.php">Solicitudes de Amistad</a>
@@ -47,72 +47,70 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
     </div>
 </nav>
 
-<div class="container friend-request-list mt-5 pt-5">
-<?php
-include_once "../conexion/conexion.php";
+<div class="container friend-request-card">
+    <?php
+    include_once "../conexion/conexion.php";
 
-if (!isset($_SESSION['usuario'])) {
-    echo "<h6>Por favor, inicie sesión.</h6>";
-    exit;
-}
-
-$nombre_usuario = $_SESSION['usuario'];
-$id_usuario = "";
-
-// Obtener el ID del usuario autenticado
-try {
-    $sql = "SELECT id_usuario FROM tbl_usuarios WHERE nombre_usuario = ?";
-    $stmt = mysqli_stmt_init($conexion);
-    if (mysqli_stmt_prepare($stmt, $sql)) {
-        mysqli_stmt_bind_param($stmt, "s", $nombre_usuario);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        $usuario = mysqli_fetch_assoc($result);
-        $id_usuario = $usuario['id_usuario'];
+    if (!isset($_SESSION['usuario'])) {
+        echo "<h6>Por favor, inicie sesión.</h6>";
+        exit;
     }
-} catch (Exception $e) {
-    echo "<br><h6>" . htmlspecialchars($e->getMessage()) . "</h6>";
-    exit;
-}
 
-// Obtener la lista de amigos aceptados
-try {
-    $sql = "
-        SELECT u.nombre_usuario, u.nombreReal_usuario, u.telf_usuario
-        FROM tbl_amigos a
-        JOIN tbl_usuarios u ON (u.id_usuario = a.id_usuario_Uno OR u.id_usuario = a.id_usuario_Dos)
-        WHERE (a.id_usuario_Uno = ? OR a.id_usuario_Dos = ?)
-        AND u.id_usuario != ?";
-        
-    $stmt = mysqli_stmt_init($conexion);
-    if (mysqli_stmt_prepare($stmt, $sql)) {
-        mysqli_stmt_bind_param($stmt, "iii", $id_usuario, $id_usuario, $id_usuario);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        
-        // Mostrar la lista de amigos
-        if (mysqli_num_rows($result) > 0) {
-            echo "<h4 class='mb-3'>Lista de amigos aceptados:</h4><ul class='list-group'>";
-            while ($amigo = mysqli_fetch_assoc($result)) {
-                echo "<li class='list-group-item d-flex justify-content-between align-items-center'>
-                    <span>Usuario: " . htmlspecialchars($amigo['nombre_usuario']) . "</span>
-                </li>";
-            }
-            echo "</ul>";
-        } else {
-            echo "<h6>No tienes amigos aceptados.</h6>";
+    $nombre_usuario = $_SESSION['usuario'];
+    $id_usuario = "";
+
+    // Obtener el ID del usuario autenticado
+    try {
+        $sql = "SELECT id_usuario FROM tbl_usuarios WHERE nombre_usuario = ?";
+        $stmt = mysqli_stmt_init($conexion);
+        if (mysqli_stmt_prepare($stmt, $sql)) {
+            mysqli_stmt_bind_param($stmt, "s", $nombre_usuario);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $usuario = mysqli_fetch_assoc($result);
+            $id_usuario = $usuario['id_usuario'];
         }
-    } else {
-        echo "<h6>Error al preparar la declaración.</h6>";
+    } catch (Exception $e) {
+        echo "<br><h6>" . htmlspecialchars($e->getMessage()) . "</h6>";
+        exit;
     }
-} catch (Exception $e) {
-    echo "<br><h6>" . htmlspecialchars($e->getMessage()) . "</h6>";
-    exit;
-}
-?>
+
+    // Obtener la lista de amigos aceptados
+    try {
+        $sql = "
+            SELECT u.nombre_usuario, u.nombreReal_usuario, u.telf_usuario
+            FROM tbl_amigos a
+            JOIN tbl_usuarios u ON (u.id_usuario = a.id_usuario_Uno OR u.id_usuario = a.id_usuario_Dos)
+            WHERE (a.id_usuario_Uno = ? OR a.id_usuario_Dos = ?)
+            AND u.id_usuario != ?";
+            
+        $stmt = mysqli_stmt_init($conexion);
+        if (mysqli_stmt_prepare($stmt, $sql)) {
+            mysqli_stmt_bind_param($stmt, "iii", $id_usuario, $id_usuario, $id_usuario);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            
+            // Mostrar la lista de amigos
+            if (mysqli_num_rows($result) > 0) {
+                echo "<h4>Lista de amigos aceptados</h4>";
+                while ($amigo = mysqli_fetch_assoc($result)) {
+                    echo "<div class='friend-request-item'>
+                        <span><strong>Usuario:</strong> " . htmlspecialchars($amigo['nombre_usuario']) . "</span>
+                    </div>";
+                }
+            } else {
+                echo "<h6 class='text-center'>No tienes amigos aceptados.</h6>";
+            }
+        } else {
+            echo "<h6>Error al preparar la declaración.</h6>";
+        }
+    } catch (Exception $e) {
+        echo "<br><h6>" . htmlspecialchars($e->getMessage()) . "</h6>";
+        exit;
+    }
+    ?>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Ho7jG9z9B5QsPLg8mgSMTWVwHG79/Z1azTVY9H/m/e58K1iTVYHRt6hx4JK1K1Yf" crossorigin="anonymous"></script>
 </body>
 </html>
-

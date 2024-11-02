@@ -13,7 +13,6 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/stylesAcciones.css">
     <title>Solicitudes de Amistad</title>
- 
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
@@ -24,7 +23,7 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="buscarUsuarios.php">Añadir Amigos <span class="sr-only"></span></a>
+                    <a class="nav-link" href="buscarUsuarios.php">Añadir Amigos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="solicitudesAmistad.php">Solicitudes de Amistad</a>
@@ -51,8 +50,7 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
     </div>
 </nav>
 
-<div class="container friend-request-list">
-
+<div class="container solicitud-card">
     <?php
     try {
         // Obtener el ID del usuario actual
@@ -77,35 +75,32 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
             mysqli_stmt_execute($stmtSolicitudes);
             $solicitudes = mysqli_stmt_get_result($stmtSolicitudes);
 
-            // Mostrar las solicitudes en una lista
-            echo "<ul class='list-group mt-4'>";
+            echo "<h4 class='solicitud-header'>Solicitudes de Amistad Pendientes</h4>";
             if (mysqli_num_rows($solicitudes) > 0) {
                 while ($solicitud = mysqli_fetch_assoc($solicitudes)) {
-                    echo "<li class='list-group-item d-flex justify-content-between align-items-center'>
-                            <span>" . htmlspecialchars($solicitud['nombre_usuario']) . "  //  " . htmlspecialchars($solicitud['fecha_solicitud']) . "</span>
-                            <div>
-                                <form action='aceptarSolicitud.php' method='POST' style='display:inline;'>
+                    echo "<div class='solicitud-item'>
+                            <span><strong>" . htmlspecialchars($solicitud['nombre_usuario']) . "</strong> • " . htmlspecialchars($solicitud['fecha_solicitud']) . "</span>
+                            <div class='solicitud-buttons'>
+                                <form action='aceptarSolicitud.php' method='POST'>
                                     <input type='hidden' name='id_solicitud' value='" . $solicitud['id_solicitud'] . "'>
                                     <button type='submit' class='btn btn-success btn-sm'>Aceptar</button>
                                 </form>
-                                <form action='rechazarSolicitud.php' method='POST' style='display:inline; margin-left:5px;'>
+                                <form action='rechazarSolicitud.php' method='POST' style='margin-left:5px;'>
                                     <input type='hidden' name='id_solicitud' value='" . $solicitud['id_solicitud'] . "'>
                                     <button type='submit' class='btn btn-danger btn-sm'>Rechazar</button>
                                 </form>
                             </div>
-                          </li>";
+                          </div>";
                 }
             } else {
-                echo "<li class='list-group-item'>No tienes solicitudes de amistad pendientes.</li>";
+                echo "<p class='text-center'>No tienes solicitudes de amistad pendientes.</p>";
             }
-            echo "</ul>";
         }
     } catch (Exception $e) {
         echo "<br><h6>" . htmlspecialchars($e->getMessage()) . "</h6>";
         exit;
     }
     ?>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

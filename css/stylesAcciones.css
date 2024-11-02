@@ -1,6 +1,6 @@
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f8f9fa; 
+  background-color: #e5ddd5; 
   margin: 0; 
   padding: 70px 0 0; 
 }
@@ -192,7 +192,6 @@ hr {
 
 
 /* estilos chat */
-/* Estilo general para el contenedor de chats */
 .container-chats {
   display: flex;
   height: calc(100vh - 70px); /* Altura total menos el tamaño de la navbar */
@@ -200,8 +199,8 @@ hr {
 
 /* Estilo de la barra izquierda */
 .barra-izquierda {
-  width: 30%; /* Ajusta el ancho de la barra de amigos */
-  background-color: #160912; /* Color de fondo */
+  width: 30%; 
+  background-color: #160912; 
   padding: 15px; /* Espaciado interno */
   overflow-y: auto; /* Permitir scroll si hay muchos amigos */
 }
@@ -215,28 +214,6 @@ hr {
   flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
   height: calc(100vh - 70px); /* Altura total menos el tamaño de la navbar */
   overflow-y: auto; /* Permitir scroll si el contenido es largo */
-}
-
-/* Estilo para los mensajes enviados y recibidos */
-.message {
-  padding: 10px 15px; /* Espaciado interno */
-  border-radius: 15px; /* Bordes redondeados */
-  margin-bottom: 10px; /* Espacio entre mensajes */
-  max-width: 70%; /* Ancho máximo del mensaje */
-}
-
-/* Mensaje enviado */
-.sent {
-  background-color: #28a745; /* Color de fondo verde */
-  color: white; /* Color del texto */
-  align-self: flex-end; /* Alinear al final */
-}
-
-/* Mensaje recibido */
-.received {
-  background-color: white; /* Color de fondo blanco */
-  color: black; /* Color del texto */
-  align-self: flex-start; /* Alinear al principio */
 }
 
 /* Estilo del input de mensaje */
@@ -255,3 +232,89 @@ hr {
   border-radius: 20px; /* Bordes redondeados */
   margin-top: 10px; /* Margen superior */
 }
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.message {
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 15px;
+  margin-bottom: 5px;
+}
+
+.sent {
+  align-self: flex-end;
+  background-color: #28a745;
+  color: #bce6c6;
+  text-align: right;
+}
+
+.received {
+  align-self: flex-start;
+  background-color: #383434;
+  color: #c7c7c7;
+  text-align: left;
+}
+
+/* caja del centro de mostrar amigos */
+.friend-request-card {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 100px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
+.friend-request-card h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.friend-request-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 10px;
+}
+/* fin caja del centro de mostrar amigos */
+
+/* caja central de mostrar solicitudes de amistat */
+.solicitud-card {
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
+.solicitud-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.solicitud-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 10px;
+}
+.solicitud-buttons form {
+  display: inline;
+}
+/* fin caja central de mostrar solicitudes de amistat */
