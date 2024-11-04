@@ -1,5 +1,10 @@
 <?php
 session_start(); 
+if (!isset($_SESSION['usuario'])) {
+    echo "<h6>Por favor, inicie sesión.</h6>";
+    exit;
+}
+
 $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'] : '';
 ?>
 <!DOCTYPE html>
@@ -36,7 +41,6 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item" href="../proc/procCerrarSesion.php">Cerrar Sesión</a></li>
-                <li><a class="dropdown-item" href="mostrarAmigos.php">Amigos</a></li>
             </ul>
         </div>
         <span class="navbar-text text-light user-name">
@@ -51,10 +55,7 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
     <?php
     include_once "../conexion/conexion.php";
 
-    if (!isset($_SESSION['usuario'])) {
-        echo "<h6>Por favor, inicie sesión.</h6>";
-        exit;
-    }
+
 
     $nombre_usuario = $_SESSION['usuario'];
     $id_usuario = "";
@@ -110,7 +111,7 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
     }
     ?>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Ho7jG9z9B5QsPLg8mgSMTWVwHG79/Z1azTVY9H/m/e58K1iTVYHRt6hx4JK1K1Yf" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

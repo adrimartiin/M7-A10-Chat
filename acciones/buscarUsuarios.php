@@ -8,7 +8,13 @@ $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario
 <link rel="stylesheet" href="../css/stylesAcciones.css">
 
 <?php
+
 include_once "../conexion/conexion.php";
+
+if (!isset($_SESSION['usuario'])) {
+    echo "<h6>Por favor, inicie sesión.</h6>";
+    exit;
+}
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">

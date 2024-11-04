@@ -9,6 +9,7 @@ if (!isset($_SESSION['usuario'])) {
 
 $nombre_usuario = $_SESSION['usuario']; 
 $id_usuario = "";
+// Se usa intval para asegurarse de que el ID es un entero 
 $amigo_id = isset($_POST['amigo_id']) ? intval($_POST['amigo_id']) : null;
 $mensaje = isset($_POST['mensaje']) ? trim($_POST['mensaje']) : null;
 

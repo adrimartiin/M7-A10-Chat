@@ -1,7 +1,4 @@
 <?php
-// si se acepta la solicitud de amistad se hace un insert en la tabla tbl_amigos
-// cuando la acepta cambia el estado de la solicitud a aceptada 
-
 session_start();
 include_once '../conexion/conexion.php';
 

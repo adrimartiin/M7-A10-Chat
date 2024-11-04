@@ -2,6 +2,11 @@
 session_start(); 
 include_once "../conexion/conexion.php"; 
 
+if (!isset($_SESSION['usuario'])) {
+    echo "<h6>Por favor, inicie sesión.</h6>";
+    exit;
+}
+
 $nombre_usuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'] : '';
 ?>
 
